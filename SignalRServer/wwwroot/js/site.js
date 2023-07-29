@@ -1,5 +1,5 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/learningHub")
+    .withUrl("/echo")
     .configureLogging(signalR.LogLevel.Information)
     .build();
 

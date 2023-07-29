@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build SignalRServer",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/SignalRServer/SignalRServer.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Publish SignalRServer",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/SignalRServer/SignalRServer.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Watch SignalRServer",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/SignalRServer/SignalRServer.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Containerize SignalRServer",
+            
+            "command": "sudo",
+            "type": "shell",
+            "args": [
+                "docker",
+                "build",
+                "--build-arg",
+                "PROG=SignalRServer",
+                "-t",
+                "signalrechoserver",
+                "-f",
+                "${workspaceFolder}/SignalRServer.docker",
+                "."
+            ],
+            "group": {
+                "kind": "build",
+            },
+        },
+    ]
+}

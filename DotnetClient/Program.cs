@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
-Console.WriteLine("Please specify the URL of SignalR Hub");
+Console.WriteLine("\nPlease specify the URL of SignalR Hub");
+Console.WriteLine("Press enter to use default URL http://localhost:5128/echo");
 
 var url = Console.ReadLine();
+
+if (string.IsNullOrEmpty(url))
+    url = @"http://localhost:5128/echo";
 
 var hubConnection = new HubConnectionBuilder()
                          .WithUrl(url)
@@ -17,27 +21,14 @@ try
 
     while (true)
     {
-        var message = string.Empty;
+        var message = DateTime.UtcNow.ToString();
 
-        Console.WriteLine("Please specify the action:");
-        Console.WriteLine("0 - broadcast to all");
-        Console.WriteLine("exit - Exit the program");
-
-        var action = Console.ReadLine();
-
-        Console.WriteLine("Please specify the message:");
-        message = Console.ReadLine();
-
-        if (action == "exit")
-            break;
-
+        Console.WriteLine($"Send: {message}");
         await hubConnection.SendAsync("BroadcastMessage", message);
+        await Task.Delay(2000);
     }
 }
 catch (Exception ex)
 {
-    Console.WriteLine(ex.Message);
-    Console.WriteLine("Press any key to exit...");
-    Console.ReadKey();
-    return;
+    Console.WriteLine(ex);
 }
