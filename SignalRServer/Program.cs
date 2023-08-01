@@ -6,17 +6,28 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
+var origins = new string[] { "https://tradingview.com", "https://www.tradingview.com", "https://in.tradingview.com", "https://es.tradingview.com", "https://*.tradingview.com" };
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-        builder =>
+        policyBuilder =>
         {
-            builder.WithOrigins("https://www.tradingview.com")
+            policyBuilder.WithOrigins(origins: origins)
                 .AllowAnyHeader()
-                .WithMethods("GET", "POST")
+                .AllowAnyMethod()
+                // .WithMethods("GET", "POST")
                 .AllowCredentials();
         });
 });
+
+var webSocketOptions = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(2)
+};
+
+foreach (var origin in origins)
+    webSocketOptions.AllowedOrigins.Add(origin);
 
 var app = builder.Build();
 
@@ -40,6 +51,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseCors();
+app.UseWebSockets(webSocketOptions);
 
 app.MapHub<LearningHub>("/echo");
 app.UseBlazorFrameworkFiles();
