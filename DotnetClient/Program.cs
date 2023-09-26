@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
 Console.WriteLine("\nPlease specify the URL of SignalR Hub");
-Console.WriteLine("Press enter to use default URL http://localhost:5128/echo");
+Console.WriteLine("Press enter to use default URL http://localhost:5128/hub");
 
 var url = Console.ReadLine();
 
 if (string.IsNullOrEmpty(url))
-    url = @"http://localhost:5128/echo";
+    url = @"http://localhost:5128/hub";
 
 var hubConnection = new HubConnectionBuilder()
                          .WithUrl(url)

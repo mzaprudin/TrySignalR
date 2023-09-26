@@ -2,12 +2,12 @@
 using System.Text;
 
 Console.WriteLine("\nPlease specify the URL of SignalR Hub with WS/WSS protocol");
-Console.WriteLine("Press enter to use default URL ws://localhost:5128/echo");
+Console.WriteLine("Press enter to use default URL ws://localhost:5128/hub");
 
 var url = Console.ReadLine();
 
 if (string.IsNullOrEmpty(url))
-    url = @"ws://localhost:5128/echo";
+    url = @"ws://localhost:5128/hub";
 
 try
 {

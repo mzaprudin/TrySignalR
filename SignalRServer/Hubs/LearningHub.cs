@@ -9,6 +9,16 @@ namespace SignalRServer.Hubs
             await Clients.All.ReceiveMessage(message);
         }
 
+        public async Task UpdateLicense(string message)
+        {
+            await Clients.All.ReceiveMessage(message);
+        }
+
+        public async Task SendSignal(string message)
+        {
+            await Clients.All.ReceiveMessage(message);
+        }
+
         public override async Task OnConnectedAsync()
         {
             await base.OnConnectedAsync();

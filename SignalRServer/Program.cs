@@ -53,7 +53,7 @@ app.MapControllerRoute(
 app.UseCors();
 app.UseWebSockets(webSocketOptions);
 
-app.MapHub<LearningHub>("/echo");
+app.MapHub<LearningHub>("/hub");
 app.UseBlazorFrameworkFiles();
 
 app.Run();
